@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 import 'package:ui_challenge_heyflutter/model/plant.dart';
-import 'package:ui_challenge_heyflutter/providers/plants_provider.dart';
+import 'package:ui_challenge_heyflutter/providers/available_plants_provider.dart';
 import 'package:ui_challenge_heyflutter/screens/plants.dart';
 import 'package:ui_challenge_heyflutter/widgets/image_crousel_slider.dart';
 
@@ -20,7 +20,7 @@ late final List<Plant> plants;
 class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {
   @override
   void initState() {
-    plants = ref.read(plantsProvider);
+    plants = ref.read(availablePlantsProvider);
     super.initState();
   }
 

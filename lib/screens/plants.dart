@@ -1,17 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ui_challenge_heyflutter/providers/plants_provider.dart';
-import 'package:ui_challenge_heyflutter/screens/plant_detail.dart';
+import 'package:ui_challenge_heyflutter/widgets/available_plants.dart';
+import 'package:ui_challenge_heyflutter/widgets/favourite_plant.dart';
 
-class PlantsScreen extends ConsumerWidget {
+class PlantsScreen extends StatefulWidget {
   const PlantsScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final availablePlants = ref.read(plantsProvider);
+  State<PlantsScreen> createState() => _PlantsScreenState();
+}
+
+int _selectedPageIndex = 0;
+late Widget _activeScreen;
+
+class _PlantsScreenState extends State<PlantsScreen> {
+  void _selectedPage(int index) {
+    setState(
+      () {
+        _selectedPageIndex = index;
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    if (_selectedPageIndex == 0) {
+      _activeScreen = const AvailablePlant();
+    } else {
+      _activeScreen = const FavouritePlant();
+    }
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Search Products"),
+        title: Text(
+          _selectedPageIndex == 0 ? "Available Plants" : "Favourite Plants",
+        ),
         centerTitle: true,
         actions: const [
           CircleAvatar(
@@ -24,149 +45,22 @@ class PlantsScreen extends ConsumerWidget {
         ],
       ),
       backgroundColor: Colors.green.shade50,
-      body: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                width: 15,
-              ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  10,
-                ),
-                child: Container(
-                  height: 40,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  child: Row(
-                    children: [
-                      const Icon(
-                        Icons.search,
-                        size: 25,
-                      ),
-                      SizedBox(
-                        width: MediaQuery.of(context).size.width * 0.5,
-                        child: const TextField(
-                          textAlign: TextAlign.center,
-                          textAlignVertical: TextAlignVertical.center,
-                          decoration: InputDecoration(
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-              ClipRRect(
-                borderRadius: BorderRadius.circular(
-                  10,
-                ),
-                child: Container(
-                  height: 40,
-                  width: 40,
-                  alignment: Alignment.center,
-                  color: Theme.of(context).colorScheme.onPrimary,
-                  child: const Icon(
-                    Icons.filter_alt,
-                    size: 25,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                width: 15,
-              ),
-            ],
-          ),
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                mainAxisSpacing: 25,
-                crossAxisSpacing: 25,
-                childAspectRatio: 2 / 4,
-              ),
-              itemCount: availablePlants.length,
-              padding: const EdgeInsets.all(25),
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Navigator.of(context).push(
-                      MaterialPageRoute(
-                        builder: (context) {
-                          return PlantDetailScreen(
-                            plant: availablePlants[index],
-                          );
-                        },
-                      ),
-                    );
-                  },
-                  child: Stack(
-                    children: [
-                      Positioned.fill(
-                          child: Card(
-                        color: Colors.white,
-                        surfaceTintColor: Colors.white,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Flexible(
-                              child: Container(
-                                alignment: Alignment.center,
-                                child: Image.asset(
-                                  availablePlants[index].image,
-                                ),
-                              ),
-                            ),
-                            Text(
-                              availablePlants[index].name,
-                              style: const TextStyle(
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: [
-                                Text(
-                                  "\$${availablePlants[index].price}",
-                                  style: const TextStyle(
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                const CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor: Colors.black,
-                                  child: Icon(
-                                    Icons.favorite_outlined,
-                                    color: Colors.white,
-                                    size: 20,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 20,
-                            )
-                          ],
-                        ),
-                      ))
-                    ],
-                  ),
-                );
-              },
+      body: _activeScreen,
+      bottomNavigationBar: BottomNavigationBar(
+        onTap: _selectedPage,
+        currentIndex: _selectedPageIndex,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.shopping_basket,
             ),
+            label: "Available",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.favorite,
+            ),
+            label: "Favourite",
           ),
         ],
       ),

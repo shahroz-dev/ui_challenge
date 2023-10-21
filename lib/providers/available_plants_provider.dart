@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:ui_challenge_heyflutter/data/available_plants.dart';
+import 'package:ui_challenge_heyflutter/data/plants_data.dart';
 
-final plantsProvider = Provider((ref) {
+final availablePlantsProvider = Provider((ref) {
   return availablePlant;
 });
 

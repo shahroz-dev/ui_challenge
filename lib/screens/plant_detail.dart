@@ -141,11 +141,6 @@ class PlantDetailScreen extends StatelessWidget {
                                 "assets/images/plant_pot.png",
                                 height: 25,
                               ),
-                              // Icon(
-
-                              //   Icons.add,
-                              //   color: Theme.of(context).colorScheme.onPrimary,
-                              // ),
                               Text(
                                 "Pot",
                                 style: TextStyle(
