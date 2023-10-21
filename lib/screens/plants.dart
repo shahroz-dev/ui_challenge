@@ -1,8 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-// import 'package:ui_challenge_heyflutter/data/available_plants.dart';
 import 'package:ui_challenge_heyflutter/providers/plants_provider.dart';
 import 'package:ui_challenge_heyflutter/screens/plant_detail.dart';
 
@@ -44,15 +41,23 @@ class PlantsScreen extends ConsumerWidget {
                   10,
                 ),
                 child: Container(
+                  height: 40,
                   color: Theme.of(context).colorScheme.onPrimary,
                   child: Row(
                     children: [
                       const Icon(
                         Icons.search,
-                        size: 40,
+                        size: 25,
                       ),
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.5,
+                        child: const TextField(
+                          textAlign: TextAlign.center,
+                          textAlignVertical: TextAlignVertical.center,
+                          decoration: InputDecoration(
+                            border: InputBorder.none,
+                          ),
+                        ),
                       )
                     ],
                   ),
@@ -66,14 +71,13 @@ class PlantsScreen extends ConsumerWidget {
                   10,
                 ),
                 child: Container(
+                  height: 40,
+                  width: 40,
+                  alignment: Alignment.center,
                   color: Theme.of(context).colorScheme.onPrimary,
-                  child: const Row(
-                    children: [
-                      Icon(
-                        Icons.filter_alt,
-                        size: 40,
-                      ),
-                    ],
+                  child: const Icon(
+                    Icons.filter_alt,
+                    size: 25,
                   ),
                 ),
               ),
