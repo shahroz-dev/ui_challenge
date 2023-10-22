@@ -10,6 +10,7 @@ class AvailablePlant extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final availablePlants = ref.read(availablePlantsProvider);
+    final favouritePlantStatus = ref.watch(favouritePlantProvider);
     return Column(
       children: [
         const SizedBox(
@@ -31,6 +32,9 @@ class AvailablePlant extends ConsumerWidget {
                 color: Theme.of(context).colorScheme.onPrimary,
                 child: Row(
                   children: [
+                    const SizedBox(
+                      width: 10,
+                    ),
                     const Icon(
                       Icons.search,
                       size: 25,
@@ -137,17 +141,19 @@ class AvailablePlant extends ConsumerWidget {
                               InkWell(
                                 onTap: () {
                                   ref
-                                      .read(favouritePlantProvider.notifier)
-                                      .addPlant(
-                                        availablePlants[index],
-                                      );
+                                          .read(favouritePlantProvider.notifier)
+                                          .plantFavouriteStatus =
+                                      availablePlants[index];
                                 },
-                                child: const CircleAvatar(
+                                child: CircleAvatar(
                                   radius: 15,
-                                  backgroundColor: Colors.black,
+                                  backgroundColor: Colors.transparent,
                                   child: Icon(
                                     Icons.favorite_outlined,
-                                    color: Colors.white,
+                                    color: favouritePlantStatus
+                                            .contains(availablePlants[index])
+                                        ? Colors.red
+                                        : Colors.grey,
                                     size: 20,
                                   ),
                                 ),

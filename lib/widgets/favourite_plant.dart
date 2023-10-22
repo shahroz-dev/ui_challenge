@@ -13,7 +13,7 @@ class FavouritePlant extends ConsumerStatefulWidget {
 class _FavouritePlantState extends ConsumerState<FavouritePlant> {
   @override
   Widget build(BuildContext context) {
-    final favouritePlants = ref.read(favouritePlantProvider.notifier).data;
+    final favouritePlants = ref.watch(favouritePlantProvider);
     return Column(
       children: [
         Expanded(
@@ -75,13 +75,24 @@ class _FavouritePlantState extends ConsumerState<FavouritePlant> {
                                   fontWeight: FontWeight.bold,
                                 ),
                               ),
-                              const CircleAvatar(
-                                radius: 15,
-                                backgroundColor: Colors.black,
-                                child: Icon(
-                                  Icons.favorite_outlined,
-                                  color: Colors.white,
-                                  size: 20,
+                              InkWell(
+                                onTap: () {
+                                  ref
+                                          .read(favouritePlantProvider.notifier)
+                                          .plantFavouriteStatus =
+                                      favouritePlants[index];
+                                },
+                                child: CircleAvatar(
+                                  radius: 15,
+                                  backgroundColor: Colors.transparent,
+                                  child: Icon(
+                                    Icons.favorite_outlined,
+                                    color: favouritePlants
+                                            .contains(favouritePlants[index])
+                                        ? Colors.red
+                                        : Colors.white,
+                                    size: 20,
+                                  ),
                                 ),
                               ),
                             ],

@@ -1,3 +1,7 @@
+import 'package:uuid/uuid.dart';
+
+const uuid = Uuid();
+
 class Plant {
   final String name;
   final String height;
@@ -5,12 +9,14 @@ class Plant {
   final double price;
   final String pot;
   final String image;
-  const Plant({
+  final String id;
+  Plant({
     required this.name,
     required this.height,
     required this.temperature,
     required this.price,
     required this.pot,
     required this.image,
-  });
+    id,
+  }) : id = uuid.v4();
 }

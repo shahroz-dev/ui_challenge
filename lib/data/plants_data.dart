@@ -1,6 +1,6 @@
 import 'package:ui_challenge_heyflutter/model/plant.dart';
 
-const availablePlant = [
+final availablePlant = [
   Plant(
     name: "Lucky Jade Plant",
     height: "30 - 40 cm",
