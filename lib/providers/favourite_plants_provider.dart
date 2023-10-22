@@ -59,6 +59,10 @@ class FavouritePlantsNotifier extends StateNotifier<List<Plant>> {
       state = [plant, ...state];
     }
   }
+
+  List<Plant> get data {
+    return state;
+  }
 }
 
 final favouritePlantProvider =

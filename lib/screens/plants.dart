@@ -13,7 +13,7 @@ class PlantsScreen extends ConsumerStatefulWidget {
 
 int _selectedPageIndex = 0;
 late Widget _activeScreen;
-late final _plantFuture;
+late Future<void> _plantFuture;
 
 class _PlantsScreenState extends ConsumerState<PlantsScreen> {
   @override
@@ -55,14 +55,14 @@ class _PlantsScreenState extends ConsumerState<PlantsScreen> {
       ),
       backgroundColor: Colors.green.shade50,
       body: FutureBuilder(
-          future: _plantFuture,
-          builder: (context, snapshot) =>
-              snapshot.connectionState == ConnectionState.waiting
-                  ? const Center(
-                      child: CircularProgressIndicator(),
-                    )
-                  : _activeScreen),
-      // _activeScreen,
+        future: _plantFuture,
+        builder: (context, snapshot) =>
+            snapshot.connectionState == ConnectionState.waiting
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : _activeScreen,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectedPage,
         currentIndex: _selectedPageIndex,

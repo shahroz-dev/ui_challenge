@@ -9,8 +9,8 @@ class AvailablePlant extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final availablePlants = ref.watch(availablePlantsProvider);
-    final favouritePlantStatus = ref.watch(favouritePlantProvider);
+    final availablePlants = ref.read(availablePlantsProvider);
+    final favouritePlants = ref.watch(favouritePlantProvider);
     return Column(
       children: [
         const SizedBox(
@@ -151,7 +151,7 @@ class AvailablePlant extends ConsumerWidget {
                                   backgroundColor: Colors.transparent,
                                   child: Icon(
                                     Icons.favorite_outlined,
-                                    color: favouritePlantStatus
+                                    color: favouritePlants
                                             .contains(availablePlants[index])
                                         ? Colors.red
                                         : Colors.grey,
