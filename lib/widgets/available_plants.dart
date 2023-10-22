@@ -9,7 +9,7 @@ class AvailablePlant extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final availablePlants = ref.read(availablePlantsProvider);
+    final availablePlants = ref.watch(availablePlantsProvider);
     final favouritePlantStatus = ref.watch(favouritePlantProvider);
     return Column(
       children: [
@@ -141,9 +141,10 @@ class AvailablePlant extends ConsumerWidget {
                               InkWell(
                                 onTap: () {
                                   ref
-                                          .read(favouritePlantProvider.notifier)
-                                          .plantFavouriteStatus =
-                                      availablePlants[index];
+                                      .read(favouritePlantProvider.notifier)
+                                      .plantFavouriteStatus(
+                                        availablePlants[index],
+                                      );
                                 },
                                 child: CircleAvatar(
                                   radius: 15,

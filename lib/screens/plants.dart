@@ -1,18 +1,27 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:ui_challenge_heyflutter/providers/favourite_plants_provider.dart';
 import 'package:ui_challenge_heyflutter/widgets/available_plants.dart';
 import 'package:ui_challenge_heyflutter/widgets/favourite_plant.dart';
 
-class PlantsScreen extends StatefulWidget {
+class PlantsScreen extends ConsumerStatefulWidget {
   const PlantsScreen({super.key});
 
   @override
-  State<PlantsScreen> createState() => _PlantsScreenState();
+  ConsumerState<PlantsScreen> createState() => _PlantsScreenState();
 }
 
 int _selectedPageIndex = 0;
 late Widget _activeScreen;
+late final _plantFuture;
 
-class _PlantsScreenState extends State<PlantsScreen> {
+class _PlantsScreenState extends ConsumerState<PlantsScreen> {
+  @override
+  void initState() {
+    _plantFuture = ref.read(favouritePlantProvider.notifier).loadPlants();
+    super.initState();
+  }
+
   void _selectedPage(int index) {
     setState(
       () {
@@ -45,7 +54,15 @@ class _PlantsScreenState extends State<PlantsScreen> {
         ],
       ),
       backgroundColor: Colors.green.shade50,
-      body: _activeScreen,
+      body: FutureBuilder(
+          future: _plantFuture,
+          builder: (context, snapshot) =>
+              snapshot.connectionState == ConnectionState.waiting
+                  ? const Center(
+                      child: CircularProgressIndicator(),
+                    )
+                  : _activeScreen),
+      // _activeScreen,
       bottomNavigationBar: BottomNavigationBar(
         onTap: _selectedPage,
         currentIndex: _selectedPageIndex,

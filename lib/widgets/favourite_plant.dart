@@ -78,9 +78,10 @@ class _FavouritePlantState extends ConsumerState<FavouritePlant> {
                               InkWell(
                                 onTap: () {
                                   ref
-                                          .read(favouritePlantProvider.notifier)
-                                          .plantFavouriteStatus =
-                                      favouritePlants[index];
+                                      .read(favouritePlantProvider.notifier)
+                                      .plantFavouriteStatus(
+                                        favouritePlants[index],
+                                      );
                                 },
                                 child: CircleAvatar(
                                   radius: 15,

@@ -17,6 +17,6 @@ class Plant {
     required this.price,
     required this.pot,
     required this.image,
-    id,
-  }) : id = uuid.v4();
+    required this.id,
+  });
 }
