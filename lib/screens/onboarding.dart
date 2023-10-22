@@ -14,7 +14,6 @@ class OnboardingScreen extends ConsumerStatefulWidget {
 }
 
 int _activeIndex = 0;
-
 late final List<Plant> plants;
 
 class _OnboardingScreenState extends ConsumerState<OnboardingScreen> {

@@ -9,7 +9,7 @@ class AvailablePlant extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final availablePlants = ref.read(availablePlantsProvider);
+    final availablePlants = ref.watch(availablePlantsProvider);
     final favouritePlants = ref.watch(favouritePlantProvider);
     return Column(
       children: [
@@ -105,68 +105,69 @@ class AvailablePlant extends ConsumerWidget {
                 child: Stack(
                   children: [
                     Positioned.fill(
-                        child: Card(
-                      color: Colors.white,
-                      surfaceTintColor: Colors.white,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Flexible(
-                            child: Container(
-                              alignment: Alignment.center,
-                              child: Image.asset(
-                                availablePlants[index].image,
-                              ),
-                            ),
-                          ),
-                          Text(
-                            availablePlants[index].name,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text(
-                                "\$${availablePlants[index].price}",
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
+                      child: Card(
+                        color: Colors.white,
+                        surfaceTintColor: Colors.white,
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Flexible(
+                              child: Container(
+                                alignment: Alignment.center,
+                                child: Image.asset(
+                                  availablePlants[index].image,
                                 ),
                               ),
-                              InkWell(
-                                onTap: () {
-                                  ref
-                                      .read(favouritePlantProvider.notifier)
-                                      .plantFavouriteStatus(
-                                        availablePlants[index],
-                                      );
-                                },
-                                child: CircleAvatar(
-                                  radius: 15,
-                                  backgroundColor: Colors.transparent,
-                                  child: Icon(
-                                    Icons.favorite_outlined,
-                                    color: favouritePlants
-                                            .contains(availablePlants[index])
-                                        ? Colors.red
-                                        : Colors.grey,
-                                    size: 20,
+                            ),
+                            Text(
+                              availablePlants[index].name,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text(
+                                  "\$${availablePlants[index].price}",
+                                  style: const TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(
-                            height: 20,
-                          )
-                        ],
+                                InkWell(
+                                  onTap: () {
+                                    ref
+                                        .read(favouritePlantProvider.notifier)
+                                        .plantFavouriteStatus(
+                                          availablePlants[index],
+                                        );
+                                  },
+                                  child: CircleAvatar(
+                                    radius: 15,
+                                    backgroundColor: Colors.transparent,
+                                    child: Icon(
+                                      Icons.favorite_outlined,
+                                      color: favouritePlants
+                                              .contains(availablePlants[index])
+                                          ? Colors.red
+                                          : Colors.grey,
+                                      size: 20,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 20,
+                            )
+                          ],
+                        ),
                       ),
-                    ))
+                    ),
                   ],
                 ),
               );
